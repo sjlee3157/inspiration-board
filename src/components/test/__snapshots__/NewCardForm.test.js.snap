@@ -31,12 +31,13 @@ exports[`NewCardForm will match the NewCardForm Snapshot 1`] = `
         value=""
       />
       <label
-        className="new-card-form__select"
+        className="new-card-form__label"
         htmlFor="emoji"
       >
         Emoji
       </label>
       <select
+        className="new-card-form__select"
         name="emoji"
         onChange={[Function]}
         value=""

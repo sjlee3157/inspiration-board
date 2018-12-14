@@ -12,7 +12,8 @@ class Board extends Component {
     super(props);
 
     this.state = {
-      cards: []
+      cards: [],
+      errors: {}
     };
   }
 
@@ -49,10 +50,20 @@ class Board extends Component {
       })
   }
 
+  getErrors = (errors) => {
+    console.log(errors);
+    this.setState({ errors: errors });
+  }
+
   render() {
-    const getCardElements = () => {
-      if (this.state.cards.length === 0) return;
-      let cards = this.state.cards.map((card) => {
+    const buildCardElements = () => {
+      let allCards = []
+      const newCardForm = (<NewCardForm
+        key="newCardForm"
+        addCardCallback={ this.addCard }
+        getErrorsCallback={ this.getErrors }/>);
+      allCards.push(newCardForm);
+      allCards.push(this.state.cards.map((card) => {
         return (
           <Card
             key={ card.id }
@@ -62,19 +73,30 @@ class Board extends Component {
             onDeleteCallback={ this.deleteCard }
           />
         )
-      });
-      cards.push((<NewCardForm addCardCallback={ this.addCard } />));
-      return cards
+      }));
+      return allCards;
     }
+
+    const errors = () => {
+      let { errors } = this.state;
+      const errorsList = Object.keys(errors).map((type) => {
+        return (<li key={ type }><strong>{ type } error:</strong> { errors[type] }</li>)
+      });
+      return (
+        <ul className="validation-errors-display__list"> { errorsList }</ul>
+      )
+    }
+
     return (
       <section>
         <h2>
           Board: <a href={ this.props.url }>{ this.props.boardName }</a>
         </h2>
-        <section className="validation-errors-display">
+        <section className="validation-errors--display">
+          { this.state.errors && errors() }
         </section>
         <section className="board">
-          { getCardElements() }
+          { this.state.cards.length > 0 && buildCardElements() }
         </section>
       </section>
     )
@@ -83,7 +105,7 @@ class Board extends Component {
   componentDidMount() {
     axios.get( this.props.url )
       .then((response) => {
-        const apiCards = response.data.map((boardObject) => {
+        const cards = response.data.map((boardObject) => {
           let card = boardObject['card'];
           card = {
             id: (card.id),
@@ -92,10 +114,8 @@ class Board extends Component {
           }
           return card;
       });
-        this.setState({
-          cards: apiCards.reverse()
-        });
-        console.log(`Successfully loaded ${apiCards.length} cards`);
+        this.setState({ cards });
+        console.log(`Successfully loaded ${cards.length} cards`);
       })
       .catch((error) => {
         console.log(`Error loading cards: ${error.response.data.cause}`);

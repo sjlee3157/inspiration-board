@@ -13,7 +13,10 @@ const Card = (props) => {
   const displayDelete = () => {
     if (props.id !== Infinity) {
       return (
-        <button className="card__delete-button" onClick={ () => props.onDeleteCallback(props.id) }>X</button>
+        <button className="card__delete-button"
+          onClick={ () => props.onDeleteCallback(props.id) }>
+          X
+        </button>
       )
     }
   }
