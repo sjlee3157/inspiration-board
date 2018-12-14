@@ -54,7 +54,10 @@ Card.propTypes = {
   text: PropTypes.string.isRequired,
   emoji: PropTypes.string.isRequired,
   onDeleteCallback: PropTypes.func,
-  showEditFormCallback: PropTypes.func
+  showEditFormCallback: PropTypes.func,
+  cardType_isEditCard: PropTypes.bool,
+  cardType_isNewCard: PropTypes.bool,
+  cardType_isBasicCard: PropTypes.bool,
 };
 
 export default Card;

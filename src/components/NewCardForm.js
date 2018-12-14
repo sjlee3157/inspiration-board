@@ -16,8 +16,8 @@ class NewCardForm extends Component {
     super(props)
 
     this.state = ({
-      text: (props.id ? props.text : ''),
-      emoji: (props.id ? props.emoji : '')
+      text: (props.formType_isEditForm ? props.text : ''),
+      emoji: (props.formType_isEditForm ? props.emoji : '')
     })
   }
 
@@ -42,7 +42,7 @@ class NewCardForm extends Component {
       return this.props.getErrorsCallback(errors);
     } else {
       const newCard = { ...this.state }
-      if (this.props.id) {
+      if (this.props.formType_isEditForm) {
         newCard.id = this.props.id;
         this.props.editCardCallback(newCard);
       } else {
@@ -65,7 +65,7 @@ class NewCardForm extends Component {
   };
 
   displayTitle = () => {
-    return (this.props.id ?  'Edit Card' : 'Create A New Card');
+    return (this.props.formType_isEditForm ?  'Edit Card' : 'Create A New Card');
   }
 
   render() {
@@ -79,7 +79,9 @@ class NewCardForm extends Component {
       )
     })
     return (
-      <Card text="" emoji="" id={ Infinity }>
+      <Card text="" emoji="" id={ Infinity }
+        cardType_isNewCard={ this.props.formType_isNewForm }
+        cardType_isEditCard={ this.props.formType_isEditForm }>
         <section className="new-card-form">
           <section className="new-card-form__header">
             { this.displayTitle() }
@@ -108,7 +110,9 @@ NewCardForm.propTypes = {
   editCardCallback: PropTypes.func,
   id: PropTypes.number,
   text: PropTypes.string,
-  emoji: PropTypes.string
+  emoji: PropTypes.string,
+  formType_isNewForm: PropTypes.bool,
+  formType_isEditForm: PropTypes.bool
 };
 
 export default NewCardForm;

@@ -27,7 +27,6 @@ class Board extends Component {
         errors = {};
         this.setState({ cards, errors });
         console.log(`Successfully added card ${newCard.id}`);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(`Error adding new card: ${error.response.data.cause}`);
@@ -94,10 +93,13 @@ class Board extends Component {
   render() {
     const buildCardElements = () => {
       let allCards = []
-      const newCardForm = (<NewCardForm
-        key="newCardForm"
-        addCardCallback={ this.addCard }
-        getErrorsCallback={ this.getErrors }/>);
+      const newCardForm = (
+        <NewCardForm
+          key="newCardForm"
+          addCardCallback={ this.addCard }
+          getErrorsCallback={ this.getErrors }
+          formType_isNewForm={ true }
+        />);
       allCards.push(newCardForm);
       allCards.push(this.state.cards.map((card) => {
         if (card.cardType_isEditCard) {
@@ -108,7 +110,9 @@ class Board extends Component {
               text={ card.text }
               emoji={ card.emoji }
               editCardCallback={ this.editCard }
-              getErrorsCallback={ this.getErrors }/>
+              getErrorsCallback={ this.getErrors }
+              formType_isEditForm={ true }
+            />
           )
         } else {
           return (
@@ -120,6 +124,7 @@ class Board extends Component {
             onDeleteCallback={ this.deleteCard }
             onEditCallback={ this.editCard }
             showEditFormCallback={ this.showEditForm }
+            cardType_isBasicCard={ true }
           />
         )}
       }));
