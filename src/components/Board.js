@@ -21,10 +21,12 @@ class Board extends Component {
     axios.post(this.props.url, newCard)
       .then((response) => {
         newCard.id = response.data.card.id;
-        let { cards } = this.state;
-        cards.push(newCard);
-        this.setState({ cards });
+        let { cards, errors } = this.state;
+        cards = [ newCard, ...cards ]
+        errors = {};
+        this.setState({ cards, errors });
         console.log(`Successfully added card ${newCard.id}`);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(`Error adding new card: ${error.response.data.cause}`);
@@ -105,7 +107,7 @@ class Board extends Component {
   componentDidMount() {
     axios.get( this.props.url )
       .then((response) => {
-        const cards = response.data.map((boardObject) => {
+        let cards = response.data.map((boardObject) => {
           let card = boardObject['card'];
           card = {
             id: (card.id),
@@ -114,7 +116,8 @@ class Board extends Component {
           }
           return card;
       });
-        this.setState({ cards: cards.reverse() });
+        cards = cards.sort((a, b) => { return a.id - b.id }).reverse();
+        this.setState({ cards });
         console.log(`Successfully loaded ${cards.length} cards`);
       })
       .catch((error) => {

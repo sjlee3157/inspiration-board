@@ -40,15 +40,15 @@ class NewCardForm extends Component {
       if (emoji === '') { errors['Emoji Validation'] = 'You must select an emoji!' };
       console.log('You have form validation errors')
       return this.props.getErrorsCallback(errors);
-    };
+    } else {
+      const newCard = {
+        ...this.state,
+        id: this.props.nextCardId
+      }
 
-    const newCard = {
-      ...this.state,
-      id: this.props.nextCardId
+      this.props.addCardCallback(newCard);
+      this.resetState();
     }
-
-    this.props.addCardCallback(newCard);
-    this.resetState();
   }
 
   resetState = () => {
