@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewCardForm will match the NewCardForm Snapshot 1`] = `
+<section
+  className="new-card-form"
+>
+  <section
+    className="new-card-form__header"
+  />
+  <form
+    className="new-card-form__form"
+  >
+    <label
+      className="new-card-form--label"
+      htmlFor="text"
+    >
+      Text
+    </label>
+    <textarea
+      className="new-card-form--textarea"
+      name="text"
+    />
+    <label
+      className="new-card-form--select"
+      htmlFor="emoji"
+    >
+      Emoji
+    </label>
+    <select
+      name="emoji"
+    />
+    <input
+      className="new-card-form--form-button"
+      name="submit"
+      type="submit"
+      value="Create A New Card!"
+    />
+  </form>
+</section>
+`;

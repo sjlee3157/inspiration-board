@@ -4,8 +4,8 @@ import axios from 'axios';
 
 import './style/Board.css';
 import Card from './Card';
-import NewCardForm from './NewCardForm';
-import CARD_DATA from '../data/card-data.json';
+// import NewCardForm from './NewCardForm';
+// import CARD_DATA from '../data/card-data.json';
 
 class Board extends Component {
   constructor(props) {
@@ -17,10 +17,10 @@ class Board extends Component {
   }
 
   render() {
-    const getCards = CARD_DATA.cards.map((card, i) => {
+    const getCards = this.state.cards.map((card, i) => {
         return (
           <Card
-            key={ i }
+            key={ card.id ? card.id : `${i}` + card.text + card.emoji}
             text={ card.text ? card.text : '' }
             emoji={ card.emoji ? card.emoji : '' }
           />
@@ -28,11 +28,39 @@ class Board extends Component {
       });
 
     return (
-      <div>
-        Boards: <a href={ this.props.url }>{ this.props.boardName }</a>
-        { getCards }
-      </div>
+      <section>
+        <h2>
+          Board: <a href={ this.props.url }>{ this.props.boardName }</a>
+        </h2>
+        <section className="validation-errors-display">
+        </section>
+        <section className="board">
+          { getCards }
+        </section>
+      </section>
     )
+  }
+
+  componentDidMount() {
+    axios.get( this.props.url )
+      .then((response) => {
+        const apiCards = response.data.map((boardObject) => {
+          let card = boardObject['card'];
+          card = {
+            id: (card.id),
+            text: (card.text),
+            emoji: (card.emoji)
+          }
+          return card;
+      });
+        this.setState({
+          cards: apiCards
+        });
+        console.log(`Successfully loaded ${apiCards.length} cards`)
+      })
+      .catch((error) => {
+        console.log(`Error loading cards: ${error.response.data.cause}`);
+      })
   }
 
 }

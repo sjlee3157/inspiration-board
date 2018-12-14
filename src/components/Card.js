@@ -4,16 +4,22 @@ import emoji from 'emoji-dictionary';
 
 import './style/Card.css';
 
-const displayEmoji = (unicode) => {
-  return `${emoji.getUnicode(unicode)}`;
-}
+const displayEmoji = (unicode) => { return emoji.getUnicode(unicode) };
 
 const Card = (props) => {
     return (
-      <div className="card">
-        { props.text[0] ? props.text : null }
-        { props.emoji[0] ? displayEmoji(props.emoji) : null }
-      </div>
+      <section className="card">
+        <div className="card__content">
+          <div className="card__content-text">
+            { props.text }
+          </div>
+          <div className="card__content-emoji">
+            { displayEmoji(props.emoji) }
+          </div>
+          <div className="card__delete">
+          </div>
+        </div>
+      </section>
     )
 }
 
