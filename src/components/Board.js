@@ -114,7 +114,7 @@ class Board extends Component {
           }
           return card;
       });
-        this.setState({ cards });
+        this.setState({ cards: cards.reverse() });
         console.log(`Successfully loaded ${cards.length} cards`);
       })
       .catch((error) => {
