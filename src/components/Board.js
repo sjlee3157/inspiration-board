@@ -50,7 +50,9 @@ class Board extends Component {
   }
 
   render() {
-    const getCards = this.state.cards.map((card) => {
+    const getCardElements = () => {
+      if (this.state.cards.length === 0) return;
+      let cards = this.state.cards.map((card) => {
         return (
           <Card
             key={ card.id }
@@ -61,7 +63,9 @@ class Board extends Component {
           />
         )
       });
-
+      cards.push((<NewCardForm addCardCallback={ this.addCard } />));
+      return cards
+    }
     return (
       <section>
         <h2>
@@ -70,8 +74,7 @@ class Board extends Component {
         <section className="validation-errors-display">
         </section>
         <section className="board">
-          { getCards }
-          <NewCardForm addCardCallback={ this.addCard } />
+          { getCardElements() }
         </section>
       </section>
     )
