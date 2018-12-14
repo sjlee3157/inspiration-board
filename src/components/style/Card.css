@@ -1,7 +1,7 @@
 .card {
   background-color: #F4FF81;
 
-  padding: 1em 0;
+  padding: 0;
   margin: 0.5rem;
 
   min-height: 250px;
@@ -11,20 +11,22 @@
   border-radius: 5px;
 
   display: grid;
-  grid-template-columns: 1fr 5fr 1fr;
-  align-items: center;
+  grid-template-rows: 1fr 4fr 1fr;
+  /* align-items: center; */
 }
 
 .card__content {
-  grid-column-start: 2;
-
+  /* grid-column-start: 2; */
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  align-self: center;
 
   text-align: center;
   font-weight: 100;
   overflow: scroll;
+
+  margin: 0 30px;
+  order: 2;
 }
 
 .card__content-text {
@@ -41,13 +43,26 @@
   margin: 0;
 }
 
-.card__delete {
-  align-self: start;
+.card__tools {
+  /* align-self: start; */
+  display: flex;
+  justify-content: space-between;
+  order: 1;
+  margin-left: 0.5em;
 }
 
-.card__delete-button {
+.card__tools-button {
   background-color: inherit;
   font-family: 'Permanent Marker', Helvetica, sans-serif;
   font-size: 1.2em;
   border: none;
+  color: darkgray;
+}
+
+.card__tools-button:hover {
+  color: black;
+}
+
+.card__tools-button:last-of-type {
+  margin-left: auto;
 }

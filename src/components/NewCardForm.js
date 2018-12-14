@@ -16,8 +16,8 @@ class NewCardForm extends Component {
     super(props)
 
     this.state = ({
-      text: '',
-      emoji: ''
+      text: (props.id ? props.text : ''),
+      emoji: (props.id ? props.emoji : '')
     })
   }
 
@@ -41,12 +41,13 @@ class NewCardForm extends Component {
       console.log('You have form validation errors')
       return this.props.getErrorsCallback(errors);
     } else {
-      const newCard = {
-        ...this.state,
-        id: this.props.nextCardId
+      const newCard = { ...this.state }
+      if (this.props.id) {
+        newCard.id = this.props.id;
+        this.props.editCardCallback(newCard);
+      } else {
+        this.props.addCardCallback(newCard);
       }
-
-      this.props.addCardCallback(newCard);
       this.resetState();
     }
   }
@@ -63,6 +64,10 @@ class NewCardForm extends Component {
     return (icon ? icon : unicode)
   };
 
+  displayTitle = () => {
+    return (this.props.id ?  'Edit Card' : 'Create A New Card');
+  }
+
   render() {
     const { text, emoji } = this.state;
 
@@ -77,7 +82,7 @@ class NewCardForm extends Component {
       <Card text="" emoji="" id={ Infinity }>
         <section className="new-card-form">
           <section className="new-card-form__header">
-            Create A New Card
+            { this.displayTitle() }
           </section>
           <form className="new-card-form__form" onSubmit={ this.onSubmitHandler }>
             <label className="new-card-form__label" htmlFor="text">Text</label>
@@ -99,7 +104,11 @@ class NewCardForm extends Component {
 
 NewCardForm.propTypes = {
   addCardCallback: PropTypes.func,
-  getErrorsCallback: PropTypes.func
+  getErrorsCallback: PropTypes.func,
+  editCardCallback: PropTypes.func,
+  id: PropTypes.number,
+  text: PropTypes.string,
+  emoji: PropTypes.string
 };
 
 export default NewCardForm;

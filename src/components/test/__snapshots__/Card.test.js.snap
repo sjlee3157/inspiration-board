@@ -19,10 +19,16 @@ exports[`Card will match the Card Snapshot 1`] = `
     </div>
   </div>
   <div
-    className="card__delete"
+    className="card__tools"
   >
     <button
-      className="card__delete-button"
+      className="card__tools-button"
+      onClick={[Function]}
+    >
+      Edit
+    </button>
+    <button
+      className="card__tools-button"
       onClick={[Function]}
     >
       X

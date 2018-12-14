@@ -11,29 +11,39 @@ const Card = (props) => {
   };
 
   const displayDelete = () => {
-    if (props.id !== Infinity) {
-      return (
-        <button className="card__delete-button"
-          onClick={ () => props.onDeleteCallback(props.id) }>
-          X
-        </button>
-      )
-    }
+    return (
+      <button className="card__tools-button"
+        onClick={ () => props.onDeleteCallback(props.id) }>
+        X
+      </button>
+    )
+  }
+
+  const displayEdit = () => {
+    const { id, text, emoji } = props;
+    return (
+      <button className="card__tools-button"
+        onClick={ () => props.showEditFormCallback( { id, text, emoji }) }>
+        Edit
+      </button>
+    )
   }
 
   return (
     <section className="card">
       <div className="card__content">
-        { props.children }
         <div className="card__content-text">
+          { props.children }
           { props.text }
         </div>
         <div className="card__content-emoji">
           { displayEmoji() }
+          { /* Todo: place form body here */ }
         </div>
       </div>
-      <div className="card__delete">
-        { displayDelete() }
+      <div className="card__tools">
+        { props.id !== Infinity && displayEdit() }
+        { props.id !== Infinity && displayDelete() }
       </div>
     </section>
   )
@@ -43,7 +53,8 @@ Card.propTypes = {
   id: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
   emoji: PropTypes.string.isRequired,
-  onDeleteCallback: PropTypes.func
+  onDeleteCallback: PropTypes.func,
+  showEditFormCallback: PropTypes.func
 };
 
 export default Card;

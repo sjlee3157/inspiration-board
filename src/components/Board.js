@@ -18,7 +18,8 @@ class Board extends Component {
   }
 
   addCard = (newCard) => {
-    axios.post(this.props.url, newCard)
+    const { text, emoji } = newCard;
+    axios.post(this.props.url, { text, emoji })
       .then((response) => {
         newCard.id = response.data.card.id;
         let { cards, errors } = this.state;
@@ -52,9 +53,42 @@ class Board extends Component {
       })
   }
 
+  editCard = (cardPatch) => {
+    const url = 'https://inspiration-board.herokuapp.com/cards/' + cardPatch.id
+    console.log(`Attempting to edit card ${cardPatch.id}`)
+    const { text, emoji } = cardPatch;
+    axios.patch(url, { text, emoji } )
+      .then((response) => {
+        let { cards } = this.state;
+        let cardIndex = undefined;
+        cards.forEach((card, i) => {
+          if (card.id === cardPatch.id) {
+            cardIndex = i
+          }
+        })
+        cards[cardIndex] = cardPatch
+        this.setState({ cards });
+        console.log(`Successfully edited card ${response.data.card.id}`);
+      })
+      .catch((error) => {
+        console.log(`Error editing card: ${error.response.data.cause}`);
+      })
+  }
+
   getErrors = (errors) => {
     console.log(errors);
     this.setState({ errors: errors });
+  }
+
+  showEditForm = (cardPatch) => {
+    console.log(`Attempting to render edit form for card ${cardPatch.id}`);
+    let { cards } = this.state;
+    cards.forEach((card) => {
+      if (card.id === cardPatch.id) {
+        card.cardType_isEditCard = true;
+      }
+    } )
+    this.setState({ cards });
   }
 
   render() {
@@ -66,15 +100,28 @@ class Board extends Component {
         getErrorsCallback={ this.getErrors }/>);
       allCards.push(newCardForm);
       allCards.push(this.state.cards.map((card) => {
-        return (
+        if (card.cardType_isEditCard) {
+          return (
+            <NewCardForm
+              key="editcardForm"
+              id={ card.id }
+              text={ card.text }
+              emoji={ card.emoji }
+              editCardCallback={ this.editCard }
+              getErrorsCallback={ this.getErrors }/>
+          )
+        } else {
+          return (
           <Card
             key={ card.id }
             id={ card.id }
             text={ card.text ? card.text : '' }
             emoji={ card.emoji ? card.emoji : '' }
             onDeleteCallback={ this.deleteCard }
+            onEditCallback={ this.editCard }
+            showEditFormCallback={ this.showEditForm }
           />
-        )
+        )}
       }));
       return allCards;
     }
@@ -96,6 +143,7 @@ class Board extends Component {
         </h2>
         <section className="validation-errors--display">
           { this.state.errors && errors() }
+          { /* TODO: status messages */ }
         </section>
         <section className="board">
           { this.state.cards.length > 0 && buildCardElements() }
