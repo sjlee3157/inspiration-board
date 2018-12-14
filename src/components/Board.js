@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import './style/Board.css';
 import Card from './Card';
-// import NewCardForm from './NewCardForm';
+import NewCardForm from './NewCardForm';
 // import CARD_DATA from '../data/card-data.json';
 
 class Board extends Component {
@@ -13,14 +13,28 @@ class Board extends Component {
 
     this.state = {
       cards: [],
+      maxCardId: 0
     };
   }
 
+  addCard = (newCard) => {
+    axios.post(this.props.url, newCard)
+      .then((response) => {
+        let { cards } = this.state;
+        cards.push(newCard);
+        this.setState({ cards });
+        console.log(`Successfully added card ${newCard.id}`);
+      })
+      .catch((error) => {
+        console.log(`Error adding new card: ${error.response.data.cause}`);
+      })
+  }
+
   render() {
-    const getCards = this.state.cards.map((card, i) => {
+    const getCards = this.state.cards.map((card) => {
         return (
           <Card
-            key={ card.id ? card.id : `${i}` + card.text + card.emoji}
+            key={ card.id }
             text={ card.text ? card.text : '' }
             emoji={ card.emoji ? card.emoji : '' }
           />
@@ -36,6 +50,9 @@ class Board extends Component {
         </section>
         <section className="board">
           { getCards }
+          <NewCardForm
+            addCardCallback={ this.addCard }
+            nextCardId={ this.state.maxCardId + 1 } />
         </section>
       </section>
     )
@@ -54,13 +71,16 @@ class Board extends Component {
           return card;
       });
         this.setState({
-          cards: apiCards
+          cards: apiCards.sort(apiCards.id).reverse()
         });
-        console.log(`Successfully loaded ${apiCards.length} cards`)
+        console.log(`Successfully loaded ${apiCards.length} cards`);
+        let { cards, maxCardId } = this.state;
+        maxCardId = cards.map( card => card.id).reduce((max = 0, cur) => Math.max(max, cur), -Infinity);
+        this.setState({ maxCardId })
       })
       .catch((error) => {
         console.log(`Error loading cards: ${error.response.data.cause}`);
-      })
+      });
   }
 
 }
