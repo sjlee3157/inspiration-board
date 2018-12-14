@@ -30,6 +30,10 @@ class Board extends Component {
       })
   }
 
+  onDelete = () => {
+
+  }
+
   render() {
     const getCards = this.state.cards.map((card) => {
         return (
@@ -37,6 +41,7 @@ class Board extends Component {
             key={ card.id }
             text={ card.text ? card.text : '' }
             emoji={ card.emoji ? card.emoji : '' }
+            onDeleteCallback={ this.onDelete }
           />
         )
       });

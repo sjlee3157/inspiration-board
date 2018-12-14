@@ -24,12 +24,12 @@
 
   text-align: center;
   font-weight: 100;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .card__content-text {
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .card__content-emoji {
@@ -43,5 +43,11 @@
 
 .card__delete {
   align-self: start;
+}
+
+.card__delete-button {
+  background-color: inherit;
   font-family: 'Permanent Marker', Helvetica, sans-serif;
+  font-size: 1.2em;
+  border: none;
 }

@@ -20,8 +20,9 @@ const Card = (props) => {
           <div className="card__content-emoji">
             { displayEmoji(props.emoji) }
           </div>
-          <div className="card__delete">
-          </div>
+        </div>
+        <div className="card__delete">
+          <button className="card__delete-button" onClick={ props.onDeleteCallback }>X</button>
         </div>
       </section>
     )
@@ -29,7 +30,8 @@ const Card = (props) => {
 
 Card.propTypes = {
   text: PropTypes.string.isRequired,
-  emoji: PropTypes.string.isRequired
+  emoji: PropTypes.string.isRequired,
+  onDeleteCallback: PropTypes.func
 };
 
 export default Card;

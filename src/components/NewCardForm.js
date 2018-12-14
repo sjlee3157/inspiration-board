@@ -74,7 +74,7 @@ class NewCardForm extends Component {
             <label className="new-card-form__label" htmlFor="text">Text</label>
               <textarea className="new-card-form__textarea" name="text" onChange={ this.onFormChange } value={ text }></textarea>
             <label className="new-card-form__select" htmlFor="emoji">Emoji</label>
-              <select name="emoji" onChange={ this.onFormChange }>
+              <select name="emoji" onChange={ this.onFormChange } value={ emoji }>
                 { getEmojiOptions }
               </select>
             <input className="new-card-form__form-button" type="submit" name="submit" value="Pin It!" />
