@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import './style/Board.css';
 import Card from './Card';
-import NewCardForm from './NewCardForm';
+import CardForm from './CardForm';
 // import CARD_DATA from '../data/card-data.json';
 
 class Board extends Component {
@@ -93,19 +93,19 @@ class Board extends Component {
   render() {
     const buildCardElements = () => {
       let allCards = []
-      const newCardForm = (
-        <NewCardForm
+      const CardForm = (
+        <CardForm
           key="newCardForm"
           addCardCallback={ this.addCard }
           getErrorsCallback={ this.getErrors }
           formType_isNewForm={ true }
         />);
-      allCards.push(newCardForm);
+      allCards.push(CardForm);
       allCards.push(this.state.cards.map((card) => {
         if (card.cardType_isEditCard) {
           return (
-            <NewCardForm
-              key="editcardForm"
+            <CardForm
+              key="editCardForm"
               id={ card.id }
               text={ card.text }
               emoji={ card.emoji }

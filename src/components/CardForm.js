@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import emoji from 'emoji-dictionary';
 
-import './style/NewCardForm.css';
+import './style/CardForm.css';
 import Card from './Card';
 
 const EMOJI_LIST = ['', ...emoji.names];
@@ -11,7 +11,7 @@ const EMOJI_LIST = ['', ...emoji.names];
 //  "heart_eyes_cat", "dog"
 // ]
 
-class NewCardForm extends Component {
+class CardForm extends Component {
   constructor(props) {
     super(props)
 
@@ -104,7 +104,7 @@ class NewCardForm extends Component {
   }
 }
 
-NewCardForm.propTypes = {
+CardForm.propTypes = {
   addCardCallback: PropTypes.func,
   getErrorsCallback: PropTypes.func,
   editCardCallback: PropTypes.func,
@@ -115,4 +115,4 @@ NewCardForm.propTypes = {
   formType_isEditForm: PropTypes.bool
 };
 
-export default NewCardForm;
+export default CardForm;
