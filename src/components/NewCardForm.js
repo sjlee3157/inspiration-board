@@ -6,7 +6,6 @@ import './style/NewCardForm.css';
 import Card from './Card';
 
 const EMOJI_LIST = ['', ...emoji.names];
-
 // const EMOJI_LIST = ["", "poop", "heart_eyes", "skull", "clap", "sparkling_heart", "heart_eyes_cat", "dog"]
 
 class NewCardForm extends Component {
@@ -65,7 +64,7 @@ class NewCardForm extends Component {
       )
     })
     return (
-      <Card text="" emoji="">
+      <Card text="" emoji="" id={ Infinity }>
         <section className="new-card-form">
           <section className="new-card-form__header">
             Create A New Card
@@ -86,8 +85,7 @@ class NewCardForm extends Component {
 }
 
 NewCardForm.propTypes = {
-  addCardCallback: PropTypes.func,
-  nextCardId: PropTypes.number.isRequired
+  addCardCallback: PropTypes.func
 };
 
 export default NewCardForm;

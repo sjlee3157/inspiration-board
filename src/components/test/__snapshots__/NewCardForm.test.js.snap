@@ -3,6 +3,7 @@
 exports[`NewCardForm will match the NewCardForm Snapshot 1`] = `
 <Card
   emoji=""
+  id={Infinity}
   text=""
 >
   <section

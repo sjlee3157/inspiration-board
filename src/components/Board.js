@@ -12,14 +12,14 @@ class Board extends Component {
     super(props);
 
     this.state = {
-      cards: [],
-      maxCardId: 0
+      cards: []
     };
   }
 
   addCard = (newCard) => {
     axios.post(this.props.url, newCard)
       .then((response) => {
+        newCard.id = response.data.card.id;
         let { cards } = this.state;
         cards.push(newCard);
         this.setState({ cards });
@@ -30,8 +30,23 @@ class Board extends Component {
       })
   }
 
-  onDelete = () => {
-
+  deleteCard = (id) => {
+    const url = 'https://inspiration-board.herokuapp.com/cards/' + id
+    console.log(`Attempting to delete card ${id}`)
+    axios.delete(url)
+      .then((response) => {
+        let { cards } = this.state;
+        let cardIndex = undefined;
+        cards.forEach((card, i) => {
+          if (card.id === id ) { cardIndex = i}
+        })
+        cards.splice(cardIndex, 1);
+        this.setState({ cards });
+        console.log(`Successfully deleted card ${response.data.card.id}`);
+      })
+      .catch((error) => {
+        console.log(`Error deleting card: ${error.response.data.cause}`);
+      })
   }
 
   render() {
@@ -39,9 +54,10 @@ class Board extends Component {
         return (
           <Card
             key={ card.id }
+            id={ card.id }
             text={ card.text ? card.text : '' }
             emoji={ card.emoji ? card.emoji : '' }
-            onDeleteCallback={ this.onDelete }
+            onDeleteCallback={ this.deleteCard }
           />
         )
       });
@@ -55,9 +71,7 @@ class Board extends Component {
         </section>
         <section className="board">
           { getCards }
-          <NewCardForm
-            addCardCallback={ this.addCard }
-            nextCardId={ this.state.maxCardId + 1 } />
+          <NewCardForm addCardCallback={ this.addCard } />
         </section>
       </section>
     )
@@ -76,12 +90,9 @@ class Board extends Component {
           return card;
       });
         this.setState({
-          cards: apiCards.sort(apiCards.id).reverse()
+          cards: apiCards.reverse()
         });
         console.log(`Successfully loaded ${apiCards.length} cards`);
-        let { cards, maxCardId } = this.state;
-        maxCardId = cards.map( card => card.id).reduce((max = 0, cur) => Math.max(max, cur), -Infinity);
-        this.setState({ maxCardId })
       })
       .catch((error) => {
         console.log(`Error loading cards: ${error.response.data.cause}`);

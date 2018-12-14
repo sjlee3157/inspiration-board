@@ -5,9 +5,7 @@ import NewCardForm from '../NewCardForm';
 describe('NewCardForm', () => {
 
   it('will match the NewCardForm Snapshot', () => {
-    const wrapper = shallow( <NewCardForm
-      nextCardId={ 1 }
-      /> );
+    const wrapper = shallow( <NewCardForm /> );
   expect(wrapper).toMatchSnapshot();
   });
 
