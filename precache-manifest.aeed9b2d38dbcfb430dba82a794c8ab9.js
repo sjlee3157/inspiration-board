@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "2b537e5968c342373999",
+    "revision": "8bf7d21d5560e5a88602",
     "url": "/inspiration-board/static/css/main.95bd85b2.chunk.css"
   },
   {
-    "revision": "2b537e5968c342373999",
-    "url": "/inspiration-board/static/js/main.2b537e59.chunk.js"
+    "revision": "8bf7d21d5560e5a88602",
+    "url": "/inspiration-board/static/js/main.8bf7d21d.chunk.js"
   },
   {
     "revision": "8ad4718fa3af1dcea190",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/inspiration-board/static/js/runtime~main.d769499a.js"
   },
   {
-    "revision": "2188d7993f70c2d39a548fd3349aa460",
+    "revision": "186b4f962b6e3cdf0155e99c084da27d",
     "url": "/inspiration-board/index.html"
   }
 ];
