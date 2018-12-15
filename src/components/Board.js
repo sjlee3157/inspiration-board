@@ -93,14 +93,14 @@ class Board extends Component {
   render() {
     const buildCardElements = () => {
       let allCards = []
-      const CardForm = (
+      const newCardForm = (
         <CardForm
           key="newCardForm"
           addCardCallback={ this.addCard }
           getErrorsCallback={ this.getErrors }
           formType_isNewForm={ true }
         />);
-      allCards.push(CardForm);
+      allCards.push(newCardForm);
       allCards.push(this.state.cards.map((card) => {
         if (card.cardType_isEditCard) {
           return (

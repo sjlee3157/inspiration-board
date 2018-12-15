@@ -95,8 +95,10 @@ class CardForm extends Component {
               <select className="new-card-form__select" name="emoji" onChange={ this.onFormChange } value={ emoji }>
                 { getEmojiOptions }
               </select>
-            <input className="new-card-form__form-button" type="submit"
-              name="submit" value="Pin It!" />
+            <input className="new-card-form__form-button"
+              type="submit"
+              name="submit"
+              value={ this.props.formType__isNewForm ? 'Pin It!' : 'Save!' } />
           </form>
         </section>
       </Card>
