@@ -44,7 +44,13 @@ class CardForm extends Component {
       const newCard = { ...this.state }
       if (this.props.formType_isEditForm) {
         newCard.id = this.props.id;
-        this.props.editCardCallback(newCard);
+        if (this.props.text === text && this.props.emoji === emoji) {
+          console.log(`You made no edits to card ${ this.props.id }`)
+          newCard.callback = 'no-edit';
+          this.props.editCardCallback(newCard);
+        } else {
+          this.props.editCardCallback(newCard);
+        }
       } else {
         this.props.addCardCallback(newCard);
       }

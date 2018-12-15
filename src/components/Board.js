@@ -52,26 +52,39 @@ class Board extends Component {
       })
   }
 
-  editCard = (cardPatch) => {
-    const url = 'https://inspiration-board.herokuapp.com/cards/' + cardPatch.id
-    console.log(`Attempting to edit card ${cardPatch.id}`)
-    const { text, emoji } = cardPatch;
-    axios.patch(url, { text, emoji } )
-      .then((response) => {
-        let { cards } = this.state;
-        let cardIndex = undefined;
-        cards.forEach((card, i) => {
-          if (card.id === cardPatch.id) {
-            cardIndex = i
-          }
+  editCard = (cardPatch, ) => {
+    if (cardPatch.callback === 'no-edit') {
+      let { cards } = this.state;
+      let cardIndex = undefined;
+      cards.forEach((card, i) => {
+        if (card.id === cardPatch.id) {
+          cardIndex = i
+        }
+      })
+      cards[cardIndex] = cardPatch
+      this.setState({ cards });
+      console.log(`No patch request was made for card ${cardPatch.id}`)
+    } else {
+      const url = 'https://inspiration-board.herokuapp.com/cards/' + cardPatch.id
+      console.log(`Attempting to edit card ${cardPatch.id}`)
+      const { text, emoji } = cardPatch;
+      axios.patch(url, { text, emoji } )
+        .then((response) => {
+          let { cards } = this.state;
+          let cardIndex = undefined;
+          cards.forEach((card, i) => {
+            if (card.id === cardPatch.id) {
+              cardIndex = i
+            }
+          })
+          cards[cardIndex] = cardPatch
+          this.setState({ cards });
+          console.log(`Successfully edited card ${response.data.card.id}`);
         })
-        cards[cardIndex] = cardPatch
-        this.setState({ cards });
-        console.log(`Successfully edited card ${response.data.card.id}`);
-      })
-      .catch((error) => {
-        console.log(`Error editing card: ${error.response.data.cause}`);
-      })
+        .catch((error) => {
+          console.log(`Error editing card: ${error.response.data.cause}`);
+        })
+    }
   }
 
   getErrors = (errors) => {
