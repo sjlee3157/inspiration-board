@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Board from './components/Board';
 
-const BOARD_NAME = 'sammi jo'
+const BOARD_NAME = 'sam-lee'
 
 class App extends Component {
   render() {

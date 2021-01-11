@@ -157,7 +157,7 @@ class Board extends Component {
     return (
       <section>
         <h2>
-          Board: <a href={ this.props.url }>{ this.props.boardName }</a>
+          Board Name: { this.props.boardName }
         </h2>
         <section className="validation-errors--display">
           { this.state.errors && errors() }
